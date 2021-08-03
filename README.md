@@ -1,1 +1,1 @@
-# redux-examples
+# Redux & React examples
