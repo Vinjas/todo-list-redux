@@ -41,14 +41,16 @@ export default function todosReducer(state = initialState, action) {
         }
         // Select a color category for a todo
         case "todos/colorSelected": {
+            const {color, id} = action.payload
+            
             return [
                 state.map(todo => {
-                    if(todo.id !== action.payload.id) {
+                    if(todo.id !== id) {
                         return todo
                     }
                     return {
                         ...todo,
-                        color: action.payload.color
+                        color: color
                     }
                 })                
             ]
