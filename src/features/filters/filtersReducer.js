@@ -12,15 +12,36 @@ export default function filtersReducer(state = initialState, action) {
                 status: action.payload
             }
         }
-        // Add a new color filter
+        // Color filter
         case "filters/colorFilterChanged": {
-            return {
-                ...state,
-                colors: action.payload.color
+            let { color, changeType } = action.payload
+            const { colors } = state
+            
+            switch(changeType) {
+                // Add a color filter
+                case "added": {
+                    if(colors.includes(color)) {
+                        return state
+                    }
+
+                    return {
+                        ...state,
+                        colors: state.colors.concat(color)
+                    }
+                }
+                // Remove a color filter
+                case "removed": {
+                    return {
+                        ...state,
+                        colors: state.colors.filter(
+                            (existingColor) => existingColor !== color
+                        )
+                    }
+                }
+                default: 
+                    return state
             }
         }
-        // Remove a color filter
-        
         default:
             return state
     }
