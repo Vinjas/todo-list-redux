@@ -56,21 +56,26 @@ export default function todosReducer(state = initialState, action) {
         // Delete a todo
         case "todos/todoDeleted": {
             return [
+                state.filter(todo => todo.id !== action.payload.id)
+            ]
+        }
+        // Mark all todos as completed
+        case "todos/allCompleted": {
+            return [
                 state.map(todo => {
-                    if(todo.id !== action.payload.id) {
-                        return todo
-                    }
                     return {
                         ...todo,
-                        
+                        completed: true
                     }
                 })
             ]
         }
-        // Mark all todos as completed
-
         // Clear all completed todos
-
+        case "todos/completedCleared": {
+            return [
+                state.filter(todo => !todo.completed)
+            ]
+        }
         default:      
             return state  
     }
